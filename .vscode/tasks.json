@@ -5,8 +5,8 @@
 	"tasks": [
         {
             "label": "Install Dependencies",
-            "type": "npm",
-            "script": "install",
+            "type": "shell",
+            "command": "npm i",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
