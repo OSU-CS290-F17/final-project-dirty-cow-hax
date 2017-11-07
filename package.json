@@ -1,0 +1,27 @@
+{
+  "name": "final-project-dirty-cow-hax",
+  "version": "0.0.1",
+  "description": "An app that will do things",
+  "main": "index.js",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "eslint": "^4.10.0",
+    "mongodb": "^2.2.33"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "install": "npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OSU-CS290-F17/final-project-dirty-cow-hax.git"
+  },
+  "author": "Logan Saso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OSU-CS290-F17/final-project-dirty-cow-hax/issues"
+  },
+  "homepage": "https://github.com/OSU-CS290-F17/final-project-dirty-cow-hax#readme"
+}
