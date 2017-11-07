@@ -1,15 +1,16 @@
 const express  = require("express");
-const config   = require("./config");
-const log      = require("./log");
 const app      = express();
 const path     = require("path");
 
 const util     = require("./util");
+const log      = require("./log");
 
+const config   = require("./config");
 
 app.use(express.static("client"));
 
-const public_path = path.join(__dirname, "client");
+//#region Get routes
+
 
 app.get('/', (req, res, next) => {
 
@@ -17,7 +18,7 @@ app.get('/', (req, res, next) => {
 
 });
 
-app.get('/index.html', (req, res, next) => {
+app.get('index', (req, res, next) => {
 
     const data = util.tryLoadFile("index.html");
 
@@ -32,6 +33,17 @@ app.get('*', (req, res, next) => {
     res.status(404).send(data);
 
 });
+
+
+//#endregion
+
+
+//#region Post routes
+
+
+
+//#endregion
+
 
 app.listen(config.port, () => {
     log.info(`Server listening on port ${config.port}`);
