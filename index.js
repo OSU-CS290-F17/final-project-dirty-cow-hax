@@ -1,36 +1,40 @@
 const express  = require("express");
 const app      = express();
 const path     = require("path");
+const fs       = require("fs");
 
-const util     = require("./util");
 const log      = require("./log");
 
 const config   = require("./config");
 
-app.use(express.static("client"));
+// app.use(express.static("client"));
 
 //#region Get routes
 
 
 app.get('/', (req, res, next) => {
 
+    req.url += "index.html";
     next();
 
 });
 
-app.get('index', (req, res, next) => {
+app.get('/index.html', (req, res, next) => {
 
-    const data = util.tryLoadFile("index.html");
+    res.contentType("html");
+    res.status(200).sendFile(path.join(__dirname, config.public_folder, "index.html"));
 
-    res.status(200).send(data);
 
 });
 
 app.get('*', (req, res, next) => {
 
-    const data = util.tryLoadFile("404.html");
+    if(!fs.exists(path.join(__dirname, config.public_folder, req.url))) {
+        res.status(404).sendFile(path.join(__dirname, config.public_folder, "404.html"));
+        return;
+    }
 
-    res.status(404).send(data);
+    res.status(200).sendFile(path.join(__dirname, config.public_folder, req.url));
 
 });
 
