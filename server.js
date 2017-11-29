@@ -1,7 +1,9 @@
 const express  = require("express");
+const exphbs   = require("express-handlebars");
 const app      = express();
 const path     = require("path");
 const fs       = require("fs");
+
 
 const log      = require("./log");
 
@@ -11,6 +13,16 @@ const config   = require("./config");
 
 //#region Get routes
 
+app.engine('handlebars', exphbs({
+    defaultLayout: 'boilerplate',
+    partialsDir: [
+        "views/partials/"
+    ]
+}));
+
+app.use(express.static('views/public'));
+
+app.set('view engine', 'handlebars');
 
 app.get('/', (req, res, next) => {
 
@@ -21,20 +33,20 @@ app.get('/', (req, res, next) => {
 
 app.get('/index.html', (req, res, next) => {
 
-    res.contentType("html");
-    res.status(200).sendFile(path.join(__dirname, config.public_folder, "index.html"));
-
+    res.status(200).render('layouts/main', {});
 
 });
 
 app.get('*', (req, res, next) => {
 
-    if(!fs.exists(path.join(__dirname, config.public_folder, req.url))) {
-        res.status(404).sendFile(path.join(__dirname, config.public_folder, "404.html"));
-        return;
-    }
+    res.status(200).render(`layouts${req.url}`, (err, html) => {
+        if(err) {
+            res.status(404).render('layouts/404');
+            return;
+        }
 
-    res.status(200).sendFile(path.join(__dirname, config.public_folder, req.url));
+        res.send(html);
+    });
 
 });
 
