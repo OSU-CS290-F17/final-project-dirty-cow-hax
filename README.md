@@ -3,7 +3,8 @@
 
 ## Group Members
 * Logan Saso (HazardDev)
-* _add yourselves here_
+* Alex Kolstad
+* Shane Clancy
 
 ## VSCode
 * I have setup the workspace so that if you use VSCode, you will have debugging support

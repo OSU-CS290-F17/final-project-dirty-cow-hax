@@ -38,7 +38,7 @@ app.get('/index.html', (req, res, next) => {
 });
 
 app.get('*', (req, res, next) => {
-
+    if(req.url.endsWith('/')) req.url = req.url.substring(0, req.url.length - 1);
     res.status(200).render(`layouts${req.url}`, (err, html) => {
         if(err) {
             res.status(404).render('layouts/404');
