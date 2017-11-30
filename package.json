@@ -4,6 +4,7 @@
   "description": "An app that will do things",
   "main": "server.js",
   "dependencies": {
+    "@types/mongodb": "^2.2.16",
     "bluebird": "^3.5.1",
     "chalk": "^2.3.0",
     "eslint": "^4.10.0",
