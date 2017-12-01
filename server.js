@@ -1,9 +1,9 @@
-const express = require("express");
-const exphbs  = require("express-handlebars");
-const app     = express();
-const path    = require("path");
-const fs      = require("fs");
-const mongo   = require("./mongo");
+const express              = require("express");
+const exphbs               = require("express-handlebars");
+const app                  = express();
+const path                 = require("path");
+const fs                   = require("fs");
+const databaseConnection   = require("./database");
 
 const log      = require("./log");
 
@@ -61,14 +61,14 @@ app.get('*', (req, res, next) => {
 //#endregion
 
 
-// Checks to see if mongo is connected. If not, waits 5 seconds and tries again. If not still it exits
-if(mongo.isConnected()) {
+// Checks to see if databaseConnection is connected. If not, waits 5 seconds and tries again. If not still it exits
+if(databaseConnection.isConnected()) {
     app.listen(config.port, () => {
         log.info(`Server listening on port ${config.port}`);
     });
 } else {
     setTimeout(() => {
-        if (mongo.isConnected()) {
+        if (databaseConnection.isConnected()) {
             app.listen(config.port, () => {
                 log.info(`Server listening on port ${config.port}`);
             });
