@@ -1,3 +1,9 @@
 {{> header}}
 
-{{> weight-entry}}
+{{> user-info userInfo}}
+
+<div class="entries">
+    {{#each entries}}
+        {{> weight-entry this}}
+    {{/each}}
+</div>
