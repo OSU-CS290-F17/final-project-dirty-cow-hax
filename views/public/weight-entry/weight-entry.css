@@ -1,3 +1,23 @@
-.weight-entry {
-    color: orange;
+
+.entry {
+    display: grid;
+    grid-template-areas: "weight time" "update delete";
+
+    border-radius: 10px;
+}
+
+.weight {
+    grid-area: weight;
+}
+
+.time {
+    grid-area: time;
+}
+
+.success {
+    grid-area: update;
+}
+
+.delete {
+    grid-area: delete;
 }
