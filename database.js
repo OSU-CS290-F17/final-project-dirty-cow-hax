@@ -95,3 +95,28 @@ function deleteEntry(entryID){
         }
     );
 }
+
+function addUser(userID){
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.insert(
+        { userID : userID },
+        function(err, result){
+            return !err;
+        }
+    );
+}
+function addEntry(userID, entryID, data){
+    let entryObj = {
+        entryID = entryID,
+        entryData = data
+    };
+
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.updateOne(
+        { entryID: entryID },
+        { $push: { entries : entryObj }},
+        function(err, result){
+            return !err;
+        }
+    );
+}
