@@ -1,6 +1,11 @@
 module.exports = {
     isConnected,
-    getCollectionAsArray
+    getUserInfo,
+    getEntries,
+    getEntry,
+    addEntry,
+    addUser,
+
 }
 
 const { MongoClient } = require("mongodb");
@@ -96,19 +101,20 @@ function deleteEntry(entryID){
     );
 }
 
-function addUser(userID){
+function addUser(name, age){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.insert(
-        { userID : userID },
-        function(err, result){
-            return !err;
-        }
+        { name: name },
+        { age: age },
+        { entries: {} }
     );
+    userName = dataCollection.findOne('final', `{ name: ${name} } { age: ${age} }`)
+    return userName._id;
 }
 function addEntry(userID, entryID, data){
     let entryObj = {
-        entryID = entryID,
-        entryData = data
+        entryID : entryID,
+        entryData : data
     };
 
     let dataCollection = mongoConnection.collection('final');
