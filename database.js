@@ -27,12 +27,12 @@ function isConnected () {
     return mongoConnection != undefined;
 } 
 
-async function getCollectionAsArray(collection, options) {
+function getCollectionAsArray(collection, options) {
 
     options = options || {}; //This line sets options to {} if options is undefined
 
     let dataCollection = mongoConnection.collection(collection);
-    await dataCollection.find(options).toArray((err, results) => {
+    dataCollection.find(options).toArray((err, results) => {
         if(err) {
             return err;
         }
@@ -42,34 +42,46 @@ async function getCollectionAsArray(collection, options) {
 }
 
 function getUserInfo(userID) {
-    let dataCollection = getCollectionAsArray(collection, userID);
-    return dataCollection;
+    let userInfo = getCollectionAsArray('final', `{userID : ${userID}}`);
+    return userInfo[0];
 }
 function getEntry(entryID){
-    let dataCollection = getCollectionAsArray(collection, entryID);
-    return dataCollection;
+    let entryInfo = getCollectionAsArray('final', `{entryID: ${entryID}}`);
+    return entryInfo[0];
 }
-async function getEntries(userID, maxNumber){
-    let dataCollection = getCollectionAsArray(collection, userID);
-    let limitedCollection= [];
+function getEntries(userID, maxNumber){
+    let entries = getCollectionAsArray('final', `{userID: ${userID}}`);
+    let limitedCollection = [];
     for (let i = 0; i < maxNumber || dataCollection[i] == undefined; i++){
         limitedCollection[i] = dataCollection[i];
     }
     return limitedCollection;
 }
 function updateUser(userID, data){
-    let dataCollection = getCollectionAsArray(collection, userID);
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.findAndModify({
+    query: { userID: userID },
+    update: { userID: data } 
+    });
     return dataCollection;
 }
 function updateEntry(entryID, data){
-    let dataCollection = getCollectionAsArray(collection, entryID);
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.findAndModify({
+        query: { userID: userID },
+        update: { userID: data } 
+    });
     return dataCollection;
 }
 function deleteUser(userID){
-    let dataCollection = getCollectionAsArray(collection, userID);
-    return dataCollection;
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.remove({
+        query: { userID: userID }
+    });
 }
 function deleteEntry(entryID){
-    let dataCollection = getCollectionAsArray(collection, userID);
-    return dataCollection;
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.remove({
+        query: { entryID: entryID }
+    });
 }
