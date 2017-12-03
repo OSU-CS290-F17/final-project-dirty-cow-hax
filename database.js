@@ -61,7 +61,7 @@ function updateUser(userID, data){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.updateOne(
         { userID: userID },
-        { $set {userID: data} },
+        { $set: { userID: data } },
         function(err, result){
             if (err){
                 return false;
@@ -76,7 +76,7 @@ function updateEntry(entryID, data){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.updateOne(
         { entryID: entryID },
-        { $set: {entryID: data }},
+        { $set: { entryID: data }},
         function(err, result){
             if (err){
                 return false;
