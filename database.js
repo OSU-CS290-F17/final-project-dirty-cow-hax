@@ -31,8 +31,8 @@ function getCollectionAsArray(collection, options) {
 
     options = options || {}; //This line sets options to {} if options is undefined
 
-    let collection = mongoConnection.collection(collection);
-    collection.find(options).toArray((err, results) => {
+    let dataCollection = mongoConnection.collection(collection);
+    dataCollection.find(options).toArray((err, results) => {
         if(err) {
             return err;
         }
