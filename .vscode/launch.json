@@ -25,11 +25,12 @@
 			"name": "Debug Server",
             "program": "${workspaceRoot}/server.js",
              "env": {
-                 "MONGODB_HOST": "",
-                 "MONGODB_PORT": "",
-                 "MONGODB_USER": "",
-                 "MONGO_PASSWORD": "",
-                 "MONGO_DB": ""
+                 "MONGODB_HOST": "classmongo.engr.oregonstate.edu",
+                 "MONGODB_PORT": "27017",
+                 "MONGODB_USER": "cs290_clancys",
+                 "MONGO_PASSWORD": "cs290_clancys",
+                 "MONGO_DB": "cs290_clancys",
+                 "DEBUG": "true"
              }
         }
 	]
