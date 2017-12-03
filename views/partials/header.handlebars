@@ -1,10 +1,16 @@
     <link rel="stylesheet" href="/header/header.css">
     <header>
+    {{#if showLogin}}
       <div class="title-bar">
+        <h1 class="site-title">Weightrack</h1>
+      </div>
+    {{else}}
+      <div class="title-bar-with-buttons">
         <h1 class="site-title">Weightrack</h1>
         <div class="buttons">
             <button id="new-user-button" class="action-button">New User</button>
             <button id="sign-in-button" class="action-button">Sign In</button>
         </div>
       </div>
+    {{/if}}
     </header>
