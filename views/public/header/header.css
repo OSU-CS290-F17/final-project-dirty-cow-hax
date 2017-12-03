@@ -4,7 +4,7 @@
     cursor: pointer;
     font-size: 160%;
     text-align: center;
-    background-color: #e6e6e6;
+    background-color: #3f3f3f;
     padding-left: 100px;
     display: inline-flex;
     font-family: 'Roboto Slab', serif;
@@ -30,7 +30,7 @@
     font-family: 'Roboto Slab', serif;
     background-color: #2c86a1;
     border: none;
-    color: rgb(40, 40, 40);
+    color: #3f3f3f;
     width: 195px;
     height: 45px;
     text-align: center;
@@ -39,12 +39,9 @@
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-
 }
 
 .action-button :hover {
-
     background-color: #2c86a1;
-    color: rgb(40, 40, 40);
-
+    color: #3f3f3f;
 }
