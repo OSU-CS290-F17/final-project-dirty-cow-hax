@@ -1,23 +1,11 @@
-.new-user {
+.container {
     width: 100%;
     cursor: pointer;
     font-size: 160%;
     text-align: center;
     background-color: #3f3f3f;
-    padding-left: 100px;
-    display: inline-flex;
+    display: inline-block;
     font-family: 'Roboto Slab', serif;
     justify-content: center;
 }
 
-.sign-in {
-    width: 100%;
-    cursor: pointer;
-    font-size: 160%;
-    text-align: center;
-    background-color: #3f3f3f;
-    padding-left: 100px;
-    display: inline-flex;
-    font-family: 'Roboto Slab', serif;
-    justify-content: center;
-}
