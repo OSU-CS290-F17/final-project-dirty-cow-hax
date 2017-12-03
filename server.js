@@ -102,7 +102,6 @@ app.get('*', (req, res, next) => {
 
 //#endregion
 
-
 //#region Post routes
 
 
@@ -144,9 +143,6 @@ app.post("/people/:userID/new", (req, res) => {
 
 
 //#endregion
-
-
-
 
 //#region delete methods
 
@@ -198,12 +194,9 @@ app.delete(`/people/:userID/:entryID`, async (req, res) => {
 
 });
 
-
-
 //#endregion
 
-
-
+//#region server launch
 
 // Checks to see if databaseConnection is connected. If not, waits 5 seconds and tries again. If not still it exits
 if(databaseConnection.isConnected() || __debug) {
@@ -219,3 +212,5 @@ if(databaseConnection.isConnected() || __debug) {
         }
     }, 5 * 1000)
 }
+
+//#endregion
