@@ -56,7 +56,7 @@ app.get('/people/:userID', async (req, res) => {
 
 });
 
-app.get('/people/:userID/:entryID', (req, res) => {
+app.get('/people/:userID/:entryID', async (req, res) => {
 
     const userID = req.params.userID;
     const entryID = req.params.entryID;
@@ -68,8 +68,8 @@ app.get('/people/:userID/:entryID', (req, res) => {
 
     }
 
-    const userInfo = databaseConnection.getUserInfo(userID);
-    const entryData = databaseConnection.getSingleEntry(userID, entryID);
+    const userInfo = await databaseConnection.getUserInfo(userID);
+    const entryData = await databaseConnection.getSingleEntry(userID, entryID);
 
     if (!userInfo || !entryData) {
 
@@ -107,17 +107,17 @@ app.get('*', (req, res, next) => {
 
 
 //Generate a brand new user here and load the new user's page
-app.post("/people/new", (req, res) => { 
+app.post("/people/new", async (req, res) => { 
 
-    //Create user
     const userData = req.body;
-
+    
     if ( !userData.hasOwnProperty('name') || !userData.hasOwnProperty('age') ) {
-
+        
         res.status(400).render('layouts/bad-request');
-
+        
     }
-
+    
+    let id = await databaseConnection.addUser(userData.name, userData.age);
     res.status(307).redirect(`/people/${userID}`);
 
 });
@@ -135,7 +135,8 @@ app.post("/people/:userID/new", (req, res) => {
         return;
 
     }
-
+    
+    await databaseConnection.addEntry(userID, {}, entryData);
     res.status(307).redirect(`/people/${userID}`);
 
 });
@@ -152,7 +153,7 @@ app.post("/people/:userID/new", (req, res) => {
 
 
 //Delete user
-app.delete('/people/:userID', (req, res) => {
+app.delete('/people/:userID', async (req, res) => {
 
     const userID = req.params.userID;
 
@@ -163,7 +164,7 @@ app.delete('/people/:userID', (req, res) => {
 
     }
 
-    if(!databaseConnection.deleteUser(userID)) {
+    if(!await databaseConnection.deleteUser(userID)) {
         res.status(400).send('Bad Request');
         return;
     }
@@ -173,7 +174,7 @@ app.delete('/people/:userID', (req, res) => {
 });
 
 //Delete entry
-app.delete(`/people/:userID/:entryID`, (req, res) => {
+app.delete(`/people/:userID/:entryID`, async (req, res) => {
 
 
     const userID = req.params.userID;
@@ -186,7 +187,7 @@ app.delete(`/people/:userID/:entryID`, (req, res) => {
 
     }
 
-    if(!databaseConnection.deleteEntry(userID, entryID)) {
+    if(!await databaseConnection.deleteEntry(userID, entryID)) {
 
         res.status(400).send('Deletion Failed');
         return;
