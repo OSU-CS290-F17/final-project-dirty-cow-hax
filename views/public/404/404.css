@@ -1,0 +1,17 @@
+.four-zero-four {
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    font-size: 2000%;
+    text-align: center;
+    font-family: 'Roboto Slab', serif;
+}
+
+.four-zero-four-text {
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    font-size: 310%;
+    text-align: center;
+    font-family: 'Roboto Slab', serif;
+}
