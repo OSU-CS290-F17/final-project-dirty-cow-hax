@@ -8,8 +8,9 @@ module.exports = {
 
 }
 
-const { MongoClient } = require("mongodb");
-const client = MongoClient;
+const Bluebird = require("bluebird");
+const { MongoClient, ObjectId } = require("mongodb");
+const client = Bluebird.promisifyAll(MongoClient);
 
 const mongoHost     = process.env.MONGODB_HOST;
 const mongoPort     = process.env.MONGODB_PORT || 27017;
@@ -46,21 +47,27 @@ function getCollectionAsArray(collection, options) {
     });
 }
 
-function getUserInfo(userID) {
-    let dataCollection = mongoConnection.collection('final');
-    let userInfo = dataCollection.findOne('final', {_id : userID});
+async function getUserInfo(userID) {
+    let dataCollection = await mongoConnection.collection('final');
+    let userInfo = await dataCollection.findOne({_id : new ObjectId(userID)});
     return userInfo;
 }
 
-function getEntry(userID, entryID){
-    let dataCollection = mongoConnection.collection('final');
-    let entryInfo = dataCollection.findOne('final', {_id : userID}, { entries : { $slice : [entryID, 1]}});
+async function getEntry(userID, entryID){
+    let dataCollection = await mongoConnection.collection('final');
+    let entryInfo = await dataCollection.findOne({
+        _id: new ObjectId(userID),
+        entries : { $slice : [entryID, 1]}
+    });
     return entryInfo;
 }
 
-function getEntries(userID, maxNumber){
-    let dataCollection = mongoConnection.collection('final');
-    let entries = dataCollection.findOne('final', {_id: userID});
+async function getEntries(userID, maxNumber, offset){
+
+    offset = offset || 0;
+
+    let dataCollection = await mongoConnection.collection('final');
+    let entries = await dataCollection.findOne({ _id: new ObjectId(userID)});
     let limitedCollection = [];
     for (let i = 0; i < maxNumber && i < dataCollection.length; i++){
         limitedCollection.push(dataCollection.entries[i]);
@@ -68,72 +75,68 @@ function getEntries(userID, maxNumber){
     return limitedCollection;
 }
 
-function updateUser(userID, data){
-    let dataCollection = mongoConnection.collection('final');
-    dataCollection.updateOne(
-        { userID: userID },
-        { $set: { userID: data } },
-        function(err, result){
-            return !err;
-        }
+async function updateUser(userID, data){
+    let dataCollection = await mongoConnection.collection('final');
+    let result = await dataCollection.updateOne(
+        { userID: new ObjectId(userID) },
+        { $set: { userID: data } }
     );
+
+    return result != undefined;
 }
 
-function updateEntry(entryID, data){
-    let dataCollection = mongoConnection.collection('final');
-    dataCollection.updateOne(
+async function updateEntry(entryID, data) {
+    let dataCollection = await mongoConnection.collection('final');
+    let result = await dataCollection.updateOne(
         { entryID: entryID },
-        { $set: { entryID: data }},
-        function(err, result){
-            return !err;
-        }
+        { $set: { entryID: data }}
     );
+
+    return result != undefined;
 }
 
-function deleteUser(userID){
-    let dataCollection = mongoConnection.collection('final');
-    dataCollection.delete(
-        { userID: userID },
-        function(err, result){
-            return !err;
-        }
+async function deleteUser(userID){
+    let dataCollection = await mongoConnection.collection('final');
+    let result = await dataCollection.delete(
+        { userID: new ObjectId(userID) }
     );
+
+    return result != undefined;
 }
 
-function deleteEntry(entryID){
-    let dataCollection = mongoConnection.collection('final');
-    dataCollection.delete(
-        { entryID: entryID },
-        function(err, result){
-            return !err;
-        }
+async function deleteEntry(entryID){
+    let dataCollection = await mongoConnection.collection('final');
+    let result = await dataCollection.delete(
+        { entryID: entryID }
     );
+
+    return result != undefined;
 }
 
 
-function addUser(name, age){
-    let dataCollection = mongoConnection.collection('final');
-    dataCollection.insert(
+async function addUser(name, age){
+    let dataCollection = await mongoConnection.collection('final');
+    let result = await dataCollection.insert(
         { name: name },
         { age: age },
         { entries: {} }
     );
-    userName = dataCollection.findOne('final', {age: age});
-    return userName._id;
+    let user = await dataCollection.findOne('final', {age: age, name: name});
+    return user ? user._id : undefined;
 }
 
-function addEntry(userID, entryID, data){
+async function addEntry(userID, entryID, data){
+    
     let entryObj = {
         time: 0,
         weight: data,
     };
 
-    let dataCollection = mongoConnection.collection('final');
-    dataCollection.updateOne(
-        { userID: userID },
-        { $push: { entries : entryObj }},
-        function(err, result){
-            return !err;
-        }
+    let dataCollection = await mongoConnection.collection('final');
+    let result = await dataCollection.updateOne(
+        { userID: new ObjectId(userID) },
+        { $push: { entries : entryObj }}
     );
+
+    return result != undefined;
 }
