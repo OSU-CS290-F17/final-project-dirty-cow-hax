@@ -4,7 +4,7 @@ const app                  = express();
 const path                 = require("path");
 const databaseConnection   = require("./database");
 
-const __debug            = process.env.DEBUG;
+const __debug            = process.env.DEBUG == "true";
 
 const log      = require("./log");
 
@@ -72,7 +72,7 @@ app.get('/people/:userID/:entryID', (req, res) => {
     }
 
     const userInfo = databaseConnection.getUserInfo(userID);
-    const entryID  = databaseConnection.getSingleEntry(userID, entryID);
+    const entryData  = databaseConnection.getSingleEntry(userID, entryID);
 
 });
 

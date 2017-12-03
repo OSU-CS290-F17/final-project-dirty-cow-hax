@@ -30,7 +30,7 @@
                  "MONGODB_USER": "cs290_clancys",
                  "MONGO_PASSWORD": "cs290_clancys",
                  "MONGO_DB": "cs290_clancys",
-                 "DEBUG": "true"
+                 "DEBUG": "false"
              }
         }
 	]

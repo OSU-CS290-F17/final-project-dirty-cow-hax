@@ -2,7 +2,7 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=733558
 	// for the documentation about the tasks.json format
 	"version": "2.0.0",
-	"tasks": [
+    "tasks": [
         {
             "label": "Install Dependencies",
             "type": "shell",
@@ -27,9 +27,10 @@
                     "MONGODB_USER": "cs290_clancys",
                     "MONGO_PASSWORD": "cs290_clancys",
                     "MONGO_DB": "cs290_clancys",
-                    "DEBUG" : "true"
+                    "DEBUG": "false"
                 }
-            }
+            },
+            "problemMatcher": []
         }
-	]
+    ]
 }
