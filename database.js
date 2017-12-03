@@ -40,3 +40,48 @@ function getCollectionAsArray(collection, options) {
         return results;
     });
 }
+
+function getUserInfo(userID) {
+    let userInfo = getCollectionAsArray('final', `{userID : ${userID}}`);
+    return userInfo[0];
+}
+function getEntry(entryID){
+    let entryInfo = getCollectionAsArray('final', `{entryID: ${entryID}}`);
+    return entryInfo[0];
+}
+function getEntries(userID, maxNumber){
+    let entries = getCollectionAsArray('final', `{userID: ${userID}}`);
+    let limitedCollection = [];
+    for (let i = 0; i < maxNumber || dataCollection[i] == undefined; i++){
+        limitedCollection[i] = dataCollection[i];
+    }
+    return limitedCollection;
+}
+function updateUser(userID, data){
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.findAndModify({
+    query: { userID: userID },
+    update: { userID: data } 
+    });
+    return dataCollection;
+}
+function updateEntry(entryID, data){
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.findAndModify({
+        query: { userID: userID },
+        update: { userID: data } 
+    });
+    return dataCollection;
+}
+function deleteUser(userID){
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.delete({
+        query: { userID: userID }
+    });
+}
+function deleteEntry(entryID){
+    let dataCollection = mongoConnection.collection('final');
+    dataCollection.delete({
+        query: { entryID: entryID }
+    });
+}
