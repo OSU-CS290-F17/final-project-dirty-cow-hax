@@ -59,29 +59,59 @@ function getEntries(userID, maxNumber){
 }
 function updateUser(userID, data){
     let dataCollection = mongoConnection.collection('final');
-    dataCollection.findAndModify({
-    query: { userID: userID },
-    update: { userID: data } 
-    });
-    return dataCollection;
+    dataCollection.updateOne(
+        { userID: userID },
+        { $set {userID: data} },
+        function(err, result){
+            if (err){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    );
 }
 function updateEntry(entryID, data){
     let dataCollection = mongoConnection.collection('final');
-    dataCollection.findAndModify({
-        query: { userID: userID },
-        update: { userID: data } 
-    });
-    return dataCollection;
+    dataCollection.updateOne(
+        { entryID: entryID },
+        { $set: {entryID: data }},
+        function(err, result){
+            if (err){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    );
 }
 function deleteUser(userID){
     let dataCollection = mongoConnection.collection('final');
-    dataCollection.delete({
-        query: { userID: userID }
-    });
+    dataCollection.delete(
+        { userID: userID },
+        function(err, result){
+            if (err){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    );
 }
 function deleteEntry(entryID){
     let dataCollection = mongoConnection.collection('final');
-    dataCollection.delete({
-        query: { entryID: entryID }
-    });
+    dataCollection.delete(
+        { entryID: entryID },
+        function(err, result){
+            if (err){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    );
 }
