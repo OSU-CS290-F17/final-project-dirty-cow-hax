@@ -63,12 +63,7 @@ function updateUser(userID, data){
         { userID: userID },
         { $set: { userID: data } },
         function(err, result){
-            if (err){
-                return false;
-            }
-            else{
-                return true;
-            }
+            return !err;
         }
     );
 }
@@ -78,12 +73,7 @@ function updateEntry(entryID, data){
         { entryID: entryID },
         { $set: { entryID: data }},
         function(err, result){
-            if (err){
-                return false;
-            }
-            else{
-                return true;
-            }
+            return !err;
         }
     );
 }
@@ -92,12 +82,7 @@ function deleteUser(userID){
     dataCollection.delete(
         { userID: userID },
         function(err, result){
-            if (err){
-                return false;
-            }
-            else{
-                return true;
-            }
+            return !err;
         }
     );
 }
@@ -106,12 +91,7 @@ function deleteEntry(entryID){
     dataCollection.delete(
         { entryID: entryID },
         function(err, result){
-            if (err){
-                return false;
-            }
-            else{
-                return true;
-            }
+            return !err;
         }
     );
 }
