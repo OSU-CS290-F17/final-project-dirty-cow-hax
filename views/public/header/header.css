@@ -8,6 +8,7 @@
     padding-left: 100px;
     display: inline-flex;
     font-family: 'Roboto Slab', serif;
+    justify-content: center;
 }
 
 .buttons {
@@ -20,10 +21,8 @@
     text-decoration: none;
     color: #2c86a1;
     text-align: center;
-
-
     padding-right: 10px;
-
+    
 }
 
 .action-button {
@@ -39,6 +38,7 @@
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    
 }
 
 .action-button :hover {
