@@ -107,8 +107,8 @@ function addUser(userID){
 }
 function addEntry(userID, entryID, data){
     let entryObj = {
-        entryID = entryID,
-        entryData = data
+        entryID : entryID,
+        entryData : data
     };
 
     let dataCollection = mongoConnection.collection('final');
