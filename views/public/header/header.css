@@ -1,42 +1,53 @@
 /*
  * You should write your CSS in this file.
  */
- .title-bar {
-  width: 100%;
-  height: 100px;
-  cursor: pointer;
-  font-size: 160%;
-  text-align: center;
-  background-color: rgb(40, 40, 40);
-  font-family: 'Roboto Slab', serif;
+
+.title-bar {
+
+    width: 100%;
+    cursor: pointer;
+    font-size: 160%;
+    /* text-align: center; */
+    background-color: #e6e6e6;
+    padding-left: 100px;
+    display: inline-flex;
+
 }
-body {
-  background-color: rgb(60, 60, 60);
+
+.buttons {
+    padding-left: 100px;
+    padding-top: 40px;
 }
+
 .site-title {
-  text-decoration: none;
-  font-family: 'Roboto Slab', serif;
-  color: rgb(120, 20, 200);
-  text-align: center;
+
+    text-decoration: none;
+    color: #90ccdf;
+    /* text-align: center; */
+
+
+    padding-right: 10px;
+
 }
 
 .action-button {
-  background-color: rgb(120, 20, 200);
-  border: 1px solid rgb(120, 20, 200);
-  color: rgb(40, 40, 40);
-  width: 195px;
-  height: 45px;
-  text-align: center;
-  text-decoration: none;
 
-  font-size: 30px;
-  border-radius: 200px;
-  cursor: pointer;
-  font-family: 'Roboto Slab', serif;
+    background-color: #add8e6;
+    border: none;
+    color: rgb(40, 40, 40);
+    width: 195px;
+    height: 45px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+
 }
 
-.action-button:hover {
-  background-color: rgb(92, 15, 155);
-  border: 1px solid rgb(92, 15, 155);
-  color: rgb(40, 40, 40);
+.action-button :hover {
+
+    background-color: #add8e6;
+    color: rgb(40, 40, 40);
+
 }
