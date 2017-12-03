@@ -67,7 +67,7 @@ app.get('/people/:userID/:entryID', (req, res) => {
 
     const userID = parseInt(req.params.userID);
     const entryID = parseInt(req.params.entryID);
-
+    
     if(isNaN(userID) || isNaN(entryID)) {
         
         res.status(400).render('layouts/bad-request');
@@ -76,7 +76,19 @@ app.get('/people/:userID/:entryID', (req, res) => {
     }
 
     const userInfo = databaseConnection.getUserInfo(userID);
-    const entryData  = databaseConnection.getSingleEntry(userID, entryID);
+    const entryData = databaseConnection.getSingleEntry(userID, entryID);
+
+    if (!userInfo || !entryData) {
+
+        res.status(500).send('Internal Server Error');
+        return;
+
+    }
+
+    res.status(200).render('layouts/single-entry', {
+        userInfo,
+        entryData
+    })
 
 });
 
@@ -107,6 +119,12 @@ app.post("/people/new", (req, res) => {
     //Create user
     const userData = req.body;
 
+    if ( !userData.hasOwnProperty('name') || !userData.hasOwnProperty('age') ) {
+
+        res.status(400).render('layouts/bad-request');
+
+    }
+
     res.status(307).redirect(`/people/${userID}`);
 
 });
@@ -118,7 +136,7 @@ app.post("/people/:userID/new", (req, res) => {
     const userID = parseInt(req.params.userID);
     const entryData = req.body;
 
-    if ( isNaN(userID) ) { 
+    if ( isNaN(userID) || !entryData.hasOwnProperty('time') || !entryData.hasOwnProperty('weight')) { 
         
         res.status(400).render('layouts/bad-request');
         return;
@@ -147,12 +165,17 @@ app.delete('/people/:userID', (req, res) => {
 
     if (isNaN(userID)) {
 
-        res.status(400).render('layouts/bad-request');
+        res.status(400).send('Bad Request');
         return;
 
     }
 
-    databaseConnection.deleteUser(userID);
+    if(!databaseConnection.deleteUser(userID)) {
+        res.status(400).send('Bad Request');
+        return;
+    }
+
+    res.status(200).send('User Deleted');
 
 });
 
@@ -165,12 +188,19 @@ app.delete(`/people/:userID/:entryID`, (req, res) => {
 
     if (isNaN(userID) || isNaN(entryID)) {
 
-        res.status(400).render('layouts/bad-request');
+        res.status(400).send('Bad Request');
         return;
 
     }
 
-    databaseConnection.deleteEntry(userID, entryID);
+    if(!databaseConnection.deleteEntry(userID, entryID)) {
+
+        res.status(400).send('Deletion Failed');
+        return;
+
+    }
+
+    res.status(200).send('Entry Deleted');
 
 });
 
