@@ -152,7 +152,7 @@ app.delete('/people/:userID', (req, res) => {
 
     }
 
-    databaseConnection.deleteUser()
+    databaseConnection.deleteUser(userID);
 
 });
 
@@ -170,7 +170,7 @@ app.delete(`/people/:userID/:entryID`, (req, res) => {
 
     }
 
-    databaseConnection.deleteEntry(entryID);
+    databaseConnection.deleteEntry(userID, entryID);
 
 });
 
