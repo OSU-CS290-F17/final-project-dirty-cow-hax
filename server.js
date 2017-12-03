@@ -2,8 +2,9 @@ const express              = require("express");
 const exphbs               = require("express-handlebars");
 const app                  = express();
 const path                 = require("path");
-const fs                   = require("fs");
 const databaseConnection   = require("./database");
+
+const __debug            = process.env.DEBUG;
 
 const log      = require("./log");
 
@@ -26,18 +27,58 @@ app.set('view engine', 'handlebars');
 
 app.get('/', (req, res, next) => {
 
-    req.url += "index.html";
+    req.url += "index";
     next();
 
 });
 
-app.get('/index.html', (req, res, next) => {
+app.get('/index', (req, res, next) => {
 
     res.status(200).render('layouts/main', {});
 
 });
 
+app.get('/people/:userID', (req, res) => {
+
+    const userID = parseInt(req.params.userID);
+    
+    if(isNaN(userID)) {
+
+        res.status(400).render('layouts/bad-request');
+        return;
+
+    }
+
+    const userInfo = databaseConnection.getUserInfo(userID);
+    const entries = databaseConnection.getEntries(userID);
+    
+    res.status(200).render('layouts/user-overview', {
+        userInfo,
+        entries
+    });
+
+});
+
+app.get('/people/:userID/:entryID', (req, res) => {
+
+    const userID = parseInt(req.params.userID);
+    const entryID = parseInt(req.params.entryID);
+
+    if(isNaN(userID) || isNaN(entryID)) {
+        
+        res.status(400).render('layouts/bad-request');
+        return;
+
+    }
+
+    const userInfo = databaseConnection.getUserInfo(userID);
+    const entryID  = databaseConnection.getSingleEntry(userID, entryID);
+
+});
+
+
 app.get('*', (req, res, next) => {
+
     if(req.url.endsWith('/')) req.url = req.url.substring(0, req.url.length - 1);
     res.status(200).render(`layouts${req.url}`, (err, html) => {
         if(err) {
@@ -50,19 +91,18 @@ app.get('*', (req, res, next) => {
 
 });
 
-
 //#endregion
 
 
 //#region Post routes
 
-
+app.post("")
 
 //#endregion
 
 
 // Checks to see if databaseConnection is connected. If not, waits 5 seconds and tries again. If not still it exits
-if(databaseConnection.isConnected()) {
+if(databaseConnection.isConnected() || __debug) {
     app.listen(config.port, () => {
         log.info(`Server listening on port ${config.port}`);
     });
