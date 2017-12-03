@@ -75,13 +75,13 @@ function updateEntry(entryID, data){
 }
 function deleteUser(userID){
     let dataCollection = mongoConnection.collection('final');
-    dataCollection.remove({
+    dataCollection.delete({
         query: { userID: userID }
     });
 }
 function deleteEntry(entryID){
     let dataCollection = mongoConnection.collection('final');
-    dataCollection.remove({
+    dataCollection.delete({
         query: { entryID: entryID }
     });
 }
