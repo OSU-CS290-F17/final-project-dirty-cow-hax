@@ -54,7 +54,7 @@ app.get('/people/:userID', (req, res) => {
     const userInfo = databaseConnection.getUserInfo(userID);
     const entries = databaseConnection.getEntries(userID);
     
-    res.status(200).render('layouts/user-overview', {
+    res.status(200).render('layouts/main', {
         userInfo,
         entries
     });
