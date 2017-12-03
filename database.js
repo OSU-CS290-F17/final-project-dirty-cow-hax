@@ -47,21 +47,27 @@ function getCollectionAsArray(collection, options) {
 }
 
 function getUserInfo(userID) {
-    let userInfo = getCollectionAsArray('final', `{userID : ${userID}}`);
-    return userInfo[0];
+    let dataCollection = mongoConnection.collection('final');
+    let userInfo = dataCollection.findOne('final', {_id : userID});
+    return userInfo;
 }
-function getEntry(entryID){
-    let entryInfo = getCollectionAsArray('final', `{entryID: ${entryID}}`);
-    return entryInfo[0];
+
+function getEntry(userID, entryID){
+    let dataCollection = mongoConnection.collection('final');
+    let entryInfo = dataCollection.findOne('final', {_id : userID}, { entries : { $slice : [entryID, 1]}});
+    return entryInfo;
 }
+
 function getEntries(userID, maxNumber){
-    let entries = getCollectionAsArray('final', `{userID: ${userID}}`);
+    let dataCollection = mongoConnection.collection('final');
+    let entries = dataCollection.findOne('final', {_id: userID});
     let limitedCollection = [];
-    for (let i = 0; i < maxNumber || dataCollection[i] == undefined; i++){
-        limitedCollection[i] = dataCollection[i];
+    for (let i = 0; i < maxNumber && i < dataCollection.length; i++){
+        limitedCollection.push(dataCollection.entries[i]);
     }
     return limitedCollection;
 }
+
 function updateUser(userID, data){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.updateOne(
@@ -72,6 +78,7 @@ function updateUser(userID, data){
         }
     );
 }
+
 function updateEntry(entryID, data){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.updateOne(
@@ -82,6 +89,7 @@ function updateEntry(entryID, data){
         }
     );
 }
+
 function deleteUser(userID){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.delete(
@@ -91,6 +99,7 @@ function deleteUser(userID){
         }
     );
 }
+
 function deleteEntry(entryID){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.delete(
@@ -101,6 +110,7 @@ function deleteEntry(entryID){
     );
 }
 
+
 function addUser(name, age){
     let dataCollection = mongoConnection.collection('final');
     dataCollection.insert(
@@ -108,18 +118,19 @@ function addUser(name, age){
         { age: age },
         { entries: {} }
     );
-    userName = dataCollection.findOne('final', `{ name: ${name} } { age: ${age} }`)
+    userName = dataCollection.findOne('final', {age: age});
     return userName._id;
 }
+
 function addEntry(userID, entryID, data){
     let entryObj = {
-        entryID : entryID,
-        entryData : data
+        time: 0,
+        weight: data,
     };
 
     let dataCollection = mongoConnection.collection('final');
     dataCollection.updateOne(
-        { entryID: entryID },
+        { userID: userID },
         { $push: { entries : entryObj }},
         function(err, result){
             return !err;
