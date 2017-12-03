@@ -27,12 +27,12 @@ function isConnected () {
     return mongoConnection != undefined;
 } 
 
-function getCollectionAsArray(collection, options) {
+async function getCollectionAsArray(collection, options) {
 
     options = options || {}; //This line sets options to {} if options is undefined
 
     let dataCollection = mongoConnection.collection(collection);
-    dataCollection.find(options).toArray((err, results) => {
+    await dataCollection.find(options).toArray((err, results) => {
         if(err) {
             return err;
         }
@@ -40,3 +40,14 @@ function getCollectionAsArray(collection, options) {
         return results;
     });
 }
+
+function getUserInfo(collection, userID) {
+    let dataCollection = getCollectionAsArray(collection, userID);
+    return dataCollection;
+}
+function getEntry(entryID)
+function getEntries(userID, maxNumber)
+function updateUser(userID, data)
+function updateEntry(entryID, data)
+function deleteUser(userID)
+function deleteEntry(entryID)
