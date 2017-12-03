@@ -42,19 +42,12 @@ app.get('/index', (req, res, next) => {
 
 });
 
-app.get('/people/:userID', (req, res) => {
+app.get('/people/:userID', async (req, res) => {
 
-    const userID = parseInt(req.params.userID);
+    const userID = req.params.userID;
     
-    if(isNaN(userID)) {
-
-        res.status(400).render('layouts/bad-request');
-        return;
-
-    }
-
-    const userInfo = databaseConnection.getUserInfo(userID);
-    const entries = databaseConnection.getEntries(userID);
+    const userInfo = await databaseConnection.getUserInfo(userID);
+    const entries = await databaseConnection.getEntries(userID);
     
     res.status(200).render('layouts/main', {
         userInfo,
@@ -65,8 +58,8 @@ app.get('/people/:userID', (req, res) => {
 
 app.get('/people/:userID/:entryID', (req, res) => {
 
-    const userID = parseInt(req.params.userID);
-    const entryID = parseInt(req.params.entryID);
+    const userID = req.params.userID;
+    const entryID = req.params.entryID;
     
     if(isNaN(userID) || isNaN(entryID)) {
         
@@ -133,7 +126,7 @@ app.post("/people/new", (req, res) => {
 //Add a new entry to a user
 app.post("/people/:userID/new", (req, res) => {
 
-    const userID = parseInt(req.params.userID);
+    const userID = req.params.userID;
     const entryData = req.body;
 
     if ( isNaN(userID) || !entryData.hasOwnProperty('time') || !entryData.hasOwnProperty('weight')) { 
@@ -161,7 +154,7 @@ app.post("/people/:userID/new", (req, res) => {
 //Delete user
 app.delete('/people/:userID', (req, res) => {
 
-    const userID = parseInt(req.params.userID);
+    const userID = req.params.userID;
 
     if (isNaN(userID)) {
 
@@ -183,8 +176,8 @@ app.delete('/people/:userID', (req, res) => {
 app.delete(`/people/:userID/:entryID`, (req, res) => {
 
 
-    const userID = parseInt(req.params.userID);
-    const entryID = parseInt(req.params.entryID);
+    const userID = req.params.userID;
+    const entryID = req.params.entryID;
 
     if (isNaN(userID) || isNaN(entryID)) {
 
