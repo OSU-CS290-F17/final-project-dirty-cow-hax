@@ -41,13 +41,35 @@ async function getCollectionAsArray(collection, options) {
     });
 }
 
-function getUserInfo(collection, userID) {
+function getUserInfo(userID) {
     let dataCollection = getCollectionAsArray(collection, userID);
     return dataCollection;
 }
-function getEntry(entryID)
-function getEntries(userID, maxNumber)
-function updateUser(userID, data)
-function updateEntry(entryID, data)
-function deleteUser(userID)
-function deleteEntry(entryID)
+function getEntry(entryID){
+    let dataCollection = getCollectionAsArray(collection, entryID);
+    return dataCollection;
+}
+async function getEntries(userID, maxNumber){
+    let dataCollection = getCollectionAsArray(collection, userID);
+    let limitedCollection= [];
+    for (let i = 0; i < maxNumber || dataCollection[i] == undefined; i++){
+        limitedCollection[i] = dataCollection[i];
+    }
+    return limitedCollection;
+}
+function updateUser(userID, data){
+    let dataCollection = getCollectionAsArray(collection, userID);
+    return dataCollection;
+}
+function updateEntry(entryID, data){
+    let dataCollection = getCollectionAsArray(collection, entryID);
+    return dataCollection;
+}
+function deleteUser(userID){
+    let dataCollection = getCollectionAsArray(collection, userID);
+    return dataCollection;
+}
+function deleteEntry(entryID){
+    let dataCollection = getCollectionAsArray(collection, userID);
+    return dataCollection;
+}
