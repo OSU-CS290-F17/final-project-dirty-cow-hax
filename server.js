@@ -61,19 +61,14 @@ app.get('/people/:userID/:entryID', async (req, res) => {
     const userID = req.params.userID;
     const entryID = req.params.entryID;
     
-    if(isNaN(userID) || isNaN(entryID)) {
-        
-        res.status(400).render('layouts/404');
-        return;
-
-    }
-
     const userInfo = await databaseConnection.getUserInfo(userID);
     const entryData = await databaseConnection.getSingleEntry(userID, entryID);
 
     if (!userInfo || !entryData) {
 
-        res.status(500).send('Internal Server Error');
+        res.status(500).render('layouts/error', {
+            err: 'Internal Server Error', errNum: 500
+        });
         return;
 
     }
@@ -91,7 +86,10 @@ app.get('*', (req, res, next) => {
     if(req.url.endsWith('/')) req.url = req.url.substring(0, req.url.length - 1);
     res.status(200).render(`layouts${req.url}`, (err, html) => {
         if(err) {
-            res.status(404).render('layouts/404');
+            res.status(404).render('layouts/error', {
+                err: "Page not Found.",
+                errNum: 404
+            });
             return;
         }
 
@@ -112,7 +110,10 @@ app.post("/people/new", async (req, res) => {
     
     if ( !userData.hasOwnProperty('name') || !userData.hasOwnProperty('age') ) {
         
-        res.status(400).render('layouts/bad-request');
+        res.status(400).render('layouts/error', {
+            err: "Bad Request",
+            errNum: 400
+        });
         
     }
     
@@ -130,7 +131,10 @@ app.post("/people/:userID/new", async (req, res) => {
 
     if ( isNaN(userID) || !entryData.hasOwnProperty('time') || !entryData.hasOwnProperty('weight')) { 
         
-        res.status(400).render('layouts/bad-request');
+        res.status(400).render('layouts/error', {
+            err: "Bad Request",
+            errNum: 400
+        });
         return;
 
     }
@@ -155,13 +159,19 @@ app.delete('/people/:userID', async (req, res) => {
 
     if (isNaN(userID)) {
 
-        res.status(400).send('Bad Request');
+        res.status(400).render('layouts/error', {
+            err: "Bad Request",
+            errNum: 400
+        });
         return;
 
     }
 
     if(!await databaseConnection.deleteUser(userID)) {
-        res.status(400).send('Bad Request');
+        res.status(400).render('layouts/error', {
+            err: "Bad Request",
+            errNum: 400
+        });
         return;
     }
 
@@ -178,14 +188,19 @@ app.delete(`/people/:userID/:entryID`, async (req, res) => {
 
     if (isNaN(userID) || isNaN(entryID)) {
 
-        res.status(400).send('Bad Request');
+        res.status(400).render('layouts/error', {
+            err: "Bad Request",
+            errNum: 400
+        });
         return;
 
     }
 
     if(!await databaseConnection.deleteEntry(userID, entryID)) {
-
-        res.status(400).send('Deletion Failed');
+        res.status(400).render('layouts/error', {
+            err: "Deletion Failed",
+            errNum: 400
+        });
         return;
 
     }
