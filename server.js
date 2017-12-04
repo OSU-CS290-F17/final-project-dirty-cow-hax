@@ -36,7 +36,7 @@ app.get('/', (req, res, next) => {
 
 app.get('/index', (req, res, next) => {
 
-    res.status(200).render('layouts/main', {
+    res.status(200).render('layouts/index', {
         showLogin: true
     });
 
