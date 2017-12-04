@@ -1,4 +1,4 @@
-# Weightracking App
+# Weight Tracking App
 ---
 
 ## Group Members
@@ -10,6 +10,7 @@
 * Displays a main page with all of the users.
 * Capability to create a user.
 * Each user has their own page with their recent entries and a graph of all of their entries over time.
+* User can Update and Remove entries from their page.
 * Cabability to remove user (?).
 
 ## VSCode
