@@ -1,10 +1,16 @@
-# It'll Do Something App
+# Weightracking App
 ---
 
 ## Group Members
 * Logan Saso (HazardDev)
 * Alex Kolstad
 * Shane Clancy
+
+## What it Does
+* Displays a main page with all of the users.
+* Capability to create a user.
+* Each user has their own page with their recent entries and a graph of all of their entries over time.
+* Cabability to remove user (?).
 
 ## VSCode
 * I have setup the workspace so that if you use VSCode, you will have debugging support

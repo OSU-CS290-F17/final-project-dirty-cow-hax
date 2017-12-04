@@ -3,9 +3,10 @@ module.exports = {
     getUserInfo,
     getEntries,
     getEntry,
+    updateUser,
+    updateEntry,
     addEntry,
     addUser,
-
 }
 
 const Bluebird = require("bluebird");
