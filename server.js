@@ -123,7 +123,7 @@ app.post("/people/new", async (req, res) => {
 
 
 //Add a new entry to a user
-app.post("/people/:userID/new", (req, res) => {
+app.post("/people/:userID/new", async (req, res) => {
 
     const userID = req.params.userID;
     const entryData = req.body;
