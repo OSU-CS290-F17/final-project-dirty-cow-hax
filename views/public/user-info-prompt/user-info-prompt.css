@@ -1,0 +1,57 @@
+.container {
+    /* visibility: hidden; */
+}
+
+.user-info-prompt {
+
+    
+    z-index: 1000;
+    position: absolute;
+    top: 100px;
+    background-color: white;
+    border-radius: 20px;
+    border : solid rgb(238, 238, 238);
+
+    padding: 20px;
+
+    width: 40%;
+    left: 30%;
+    right: 30%;
+    
+    display: grid;
+    grid-template-areas: ". header ." ". name name" "age age .";
+    grid-gap: 10px;
+}
+
+.prompt-input {
+
+
+}
+
+.user-info-header {
+    grid-area: header;
+}
+
+.name-input {
+    grid-area: name;    
+}
+
+.age-input {
+    grid-area: age;
+}
+
+
+
+
+.background {
+    z-index: 999;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(22, 19, 19, 0.623);
+    width: 100%;
+    height: 100%;
+}
