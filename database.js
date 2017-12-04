@@ -129,7 +129,7 @@ async function addUser(name, age){
 async function addEntry(userID, entryID, data){
     
     let entryObj = {
-        time: 0,
+        time: new Date(unix_timestamp*1000),
         weight: data,
     };
 
