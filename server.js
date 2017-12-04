@@ -63,7 +63,7 @@ app.get('/people/:userID/:entryID', async (req, res) => {
     
     if(isNaN(userID) || isNaN(entryID)) {
         
-        res.status(400).render('layouts/bad-request');
+        res.status(400).render('layouts/404');
         return;
 
     }
