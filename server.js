@@ -34,10 +34,15 @@ app.get('/', (req, res, next) => {
 
 });
 
-app.get('/index', (req, res, next) => {
+app.get('/index', async (req, res, next) => {
 
+    const users = await databaseConnection.getUsers();
+    for(let i = 0; i < users.length; i++){
+        users[i].home = true;
+    }
     res.status(200).render('layouts/index', {
-        showLogin: true
+        showLogin: true,
+        people: users
     });
 
 });
@@ -46,8 +51,8 @@ app.get('/people/:userID', async (req, res) => {
 
     const userID = req.params.userID;
     
-    const userInfo = await databaseConnection.getUserInfo(userID);
-    const entries = await databaseConnection.getEntries(userID);
+    const userInfo = await databaseConnection.getUser(userID);
+    const entries = await databaseConnection.getEntries(userID, 25, 0);
     
     res.status(200).render('layouts/main', {
         userInfo,
@@ -61,7 +66,7 @@ app.get('/people/:userID/:entryID', async (req, res) => {
     const userID = req.params.userID;
     const entryID = req.params.entryID;
     
-    const userInfo = await databaseConnection.getUserInfo(userID);
+    const userInfo = await databaseConnection.getUser(userID);
     const entryData = await databaseConnection.getSingleEntry(userID, entryID);
 
     if (!userInfo || !entryData) {
@@ -118,7 +123,8 @@ app.post("/people/new", async (req, res) => {
     }
     
     let id = await databaseConnection.addUser(userData.name, userData.age);
-    res.status(307).redirect(`/people/${userID}`);
+    res.status(200).send(id);
+    // res.stat
 
 });
 

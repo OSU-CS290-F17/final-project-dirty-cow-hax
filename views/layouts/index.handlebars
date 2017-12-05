@@ -6,8 +6,9 @@
     <h1 class="text">A lightweight weight tracking webapp for the modern world<br>Just add your weight day by day and watch your progress<br>Simple. Efficient. Light</h1>
 </div>
 
-<div class="description-image">
-    <img src="/index/titleimage.png" alt="Description-Image">
+<div class="people">
+     {{#each people}} {{> user-info this}} {{/each}}
 </div>
+
 
 {{> user-info-prompt-modal}}

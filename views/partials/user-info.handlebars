@@ -1,17 +1,14 @@
 <link rel="stylesheet" href="/user-info/user-info.css">
 
-<div class="container" id="container">
-    <div class="new-user">
-        <h1 class="new-user-text">New User</h1>
-        <h1 class="username-text-new">Username</h1>
-        <input type="text" name="Username" id="Username" class="username-input-new" placeholder="Username">
-        <h1 class="name-text">Name</h1>
-        <input type="text" name="First Name" id="First Name" class="name-input" placeholder="First Name">
-    </div>
+<div class="user-info-container">
+    <div class="name">{{name}}</div>
+    <pre>Age: </pre>
+    <div class="age">{{age}}</div>
 
-    <div class="sign-in">
-        <h1 class="sign-in-text">Sign In</h1>
-        <h1 class="username-text">Username</h1>
-        <input type="text" name="Username" id="Username" class="username-input" placeholder="Username">
-    </div>
+    {{#if entries.length}}
+        <pre class="entries">Entries: {{entries.length}}</pre>
+    {{/if}}
+    {{#if home}}
+        <button class="go-button" onclick="window.location = '/people/{{_id}}'">Go!</button>
+    {{/if}}
 </div>
