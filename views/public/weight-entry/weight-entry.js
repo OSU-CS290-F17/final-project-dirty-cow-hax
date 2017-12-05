@@ -3,7 +3,6 @@ const deleteButton = document.getElementById('delete');
 const updateModal = document.getElementById('update-modal');
 
 updateEntryButton.addEventListener('click', (event) =>{
-    console.log("update entry button clicked");
     updateModal.classList.remove('hidden');
     backdrop.classList.remove('hidden');
 });
