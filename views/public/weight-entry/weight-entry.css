@@ -3,14 +3,24 @@
     display: grid;
     grid-template-areas: "weight time" "update delete";
 
-    border-radius: 10px;
+    border-radius: 20px;
+    border : solid rgb(238, 238, 238);
+    padding: 20px;
+    width: 20%;
+    margin: 20px;
+
+    grid-gap: 10px;
 }
 
 .weight {
+    font-family: 'Roboto Slab',serif;
+    font-size: 14px;
     grid-area: weight;
 }
 
 .time {
+    font-family: 'Roboto Slab',serif;
+    font-size: 14px;
     grid-area: time;
 }
 
