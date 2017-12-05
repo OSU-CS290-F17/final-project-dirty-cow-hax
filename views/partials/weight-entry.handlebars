@@ -4,6 +4,14 @@
 <div class="entry">
     <div class="weight">Weight: {{weight}}</div>
     <div class="time">Time {{time}}</div>
-    <button class="entry-button success">Update</button>
-    <button class="entry-button delete">Delete</button>
+    <button class="entry-button success" id="success">Update</button>
+    <button class="entry-button delete" id="delete">Delete</button>
+</div>
+
+<div class="hidden" id="update-modal">
+    <div class="update-prompt">
+        <h2 class="user-info-header">Update This Entry</h2>
+        <input type="text" name="weight-input" id="weight-input" class="weight-input prompt-input" value="Input Weight">
+        <button id="create-button" class="create-button">Update</button>
+    </div>
 </div>
