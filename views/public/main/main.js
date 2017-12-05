@@ -17,15 +17,19 @@ const entryCreate = document.getElementById('create-button');
 entryCreate.addEventListener('click', (event) =>{
     let id = window.location.pathname;
     id = id.slice(8);
-    
+
+    const weightVar = document.getElementById('weight-input');
+
     const entryObj = {
-        _id : id,
-    }
+        weight: weightVar.value,
+        time: new Date()
+    };
     
     const postData = JSON.stringify(entryObj);
     const postURL = `/people/${id}/new`;
     const request = new XMLHttpRequest();
     request.open('POST', postURL);
+    request.setRequestHeader('Content-Type', 'application/json');
 
     request.addEventListener('load', (event) => {
         window.location = `/people/${id}`;
