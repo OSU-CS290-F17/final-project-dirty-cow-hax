@@ -121,7 +121,7 @@ async function addUser(name, age) {
     let result = await dataCollection.insert(
         { name: name,
           age: age,
-          entries: {} }
+          entries: [] }
     );
     let user = await dataCollection.findOne({age: age, name: name});
     return user ? user._id.toHexString() : undefined;
@@ -129,15 +129,15 @@ async function addUser(name, age) {
 
 async function addEntry(userID, entryID, data) {
     
-    let entryObj = {
+    /*let entryObj = {
         time: new Date(unix_timestamp*1000),
         weight: data,
-    };
+    };*/
 
     let dataCollection = await mongoConnection.collection('final');
     let result = await dataCollection.updateOne(
         { _id: new ObjectId(userID) },
-        { $push: { entries : entryObj }}
+        { $push: { entries : data }}
     );
 
     return result != undefined;

@@ -135,8 +135,8 @@ app.post("/people/:userID/new", async (req, res) => {
     const userID = req.params.userID;
     const entryData = req.body;
 
-    if ( isNaN(userID) || !entryData.hasOwnProperty('time') || !entryData.hasOwnProperty('weight')) { 
-        
+    if ( /*isNaN(userID) ||*/ !entryData.hasOwnProperty('time') || !entryData.hasOwnProperty('weight')) { 
+        console.log(userID, req.body);
         res.status(400).render('layouts/error', {
             err: "Bad Request",
             errNum: 400
@@ -144,7 +144,6 @@ app.post("/people/:userID/new", async (req, res) => {
         return;
 
     }
-    
     await databaseConnection.addEntry(userID, {}, entryData);
     res.status(200).send("complete");
 
