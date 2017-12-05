@@ -18,8 +18,8 @@ const createButton = document.getElementById('create-button');
 
 createButton.addEventListener('click', () => {
 
-    console.log(name.value);
-    console.log(age.value);
+    // console.log(name.value);
+    // console.log(age.value);
 
     const userObject = {
         name: name.value,
