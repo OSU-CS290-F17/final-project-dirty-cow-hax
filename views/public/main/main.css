@@ -35,7 +35,7 @@
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    /*position: relative;*/
+    margin-top: 10px;
     bottom: 10px;
     left: 30px;
 }
