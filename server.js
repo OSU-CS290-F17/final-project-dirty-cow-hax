@@ -146,7 +146,7 @@ app.post("/people/:userID/new", async (req, res) => {
     }
     
     await databaseConnection.addEntry(userID, {}, entryData);
-    res.status(307).redirect(`/people/${userID}`);
+    res.status(200).send("complete");
 
 });
 
