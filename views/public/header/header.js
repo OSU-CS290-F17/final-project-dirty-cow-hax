@@ -1,10 +1,13 @@
 const newUserButton = document.getElementById('new-user-button');
-const signInButton  = document.getElementById('sign-in-button');
 
-const signInModal   = document.getElementById('user-info-prompt');
+if (newUserButton != null){
+    const signInButton  = document.getElementById('sign-in-button');
 
-newUserButton.addEventListener('click', (event) => {
+    const signInModal   = document.getElementById('user-info-prompt');
 
-    signInModal.classList.remove('hidden');
+    newUserButton.addEventListener('click', (event) => {
 
-});
+        signInModal.classList.remove('hidden');
+
+    });
+}
