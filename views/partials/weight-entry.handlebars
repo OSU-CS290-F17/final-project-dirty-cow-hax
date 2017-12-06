@@ -1,17 +1,23 @@
 <link rel="stylesheet" href="/weight-entry/weight-entry.css">
 <script src="/weight-entry/weight-entry.js" defer></script>
 
-<div class="entry">
-    <div class="weight">Weight: {{weight}}</div>
-    <div class="time">Time {{time}}</div>
-    <button class="entry-button success" id="success">Update</button>
-    <button class="entry-button delete" id="delete">Delete</button>
-</div>
+<div>
 
-<div class="hidden" id="update-modal">
-    <div class="update-prompt">
-        <h2 class="user-info-header">Update This Entry</h2>
-        <input type="text" name="weight-input" id="weight-input" class="weight-input prompt-input" value="Input Weight">
-        <button id="create-button" class="create-button">Update</button>
+    <div class="entry">
+        <div class="weight">Weight: {{weight}}</div>
+        <div class="time">Time {{time}}</div>
+        <button class="entry-button success" id="update-entry" onclick="openModal({{@index}})">Update</button>
+        <button class="entry-button delete" id="delete-entry" onclick="deleteEntry({{@index}}, {{weight}}, '{{time}}')">Delete</button>
+    </div>
+
+    <div class="hidden" id="update-modal-container{{@index}}">
+        <div class="update-modal" id="update-modal">
+            <div class="update-prompt">
+                <h2 class="user-info-header">Update This Entry</h2>
+                <input type="text" name="weight-input" id="weight-input{{@index}}" class="weight-input prompt-input" value="Input Weight">
+                <button id="update" class="create-button" onclick="update({{@index}}, {{weight}}, '{{time}}')">Update</button>
+            </div>
+        </div>
+        <div class="modal-background" onclick="closeModal({{@index}})"></div>
     </div>
 </div>

@@ -1,10 +1,11 @@
 const entryButton = document.getElementById('entry-button');
 const entryModal = document.getElementById('entry-modal');
-const backdrop = document.getElementById('modal-background');
+const backdrop = document.getElementById('entry-modal-backdrop');
 
 entryButton.addEventListener('click', (event) => {
     entryModal.classList.remove('hidden');
     backdrop.classList.remove('hidden');
+    window.scrollTo(0, 0);
 });
 
 backdrop.addEventListener('click', (event) =>{

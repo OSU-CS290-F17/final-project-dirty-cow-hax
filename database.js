@@ -8,6 +8,8 @@ module.exports = {
     updateEntry,
     addEntry,
     addUser,
+    deleteEntry,
+    deleteUser
 }
 
 const Bluebird = require("bluebird");
@@ -87,13 +89,9 @@ async function updateUser(userID, data){
     return result != undefined;
 }
 
-async function updateEntry(entryID, data) {
-    let dataCollection = await mongoConnection.collection('final');
-    let result = await dataCollection.updateOne(
-        { entryID: entryID },
-        { $set: { entryID: data }}
-    );
-
+async function updateEntry(userID, data) {
+    let result = await deleteEntry(userID, {time: data.oldTime});
+    result += await addEntry(userID, {time: data.time, weight: data.weight});
     return result != undefined;
 }
 
@@ -106,10 +104,19 @@ async function deleteUser(userID){
     return result != undefined;
 }
 
-async function deleteEntry(entryID) {
+async function deleteEntry(userID, data) {
+
     let dataCollection = await mongoConnection.collection('final');
-    let result = await dataCollection.delete(
-        { entryID: entryID }
+    let result = await dataCollection.update(
+        { _id: new ObjectId(userID) },
+        {
+            $pull: {
+                entries: {
+                    time: data.time
+                }
+            }
+        },
+        {multi: true}
     );
 
     return result != undefined;
@@ -127,13 +134,8 @@ async function addUser(name, age) {
     return user ? user._id.toHexString() : undefined;
 }
 
-async function addEntry(userID, entryID, data) {
-    
-    /*let entryObj = {
-        time: new Date(unix_timestamp*1000),
-        weight: data,
-    };*/
-
+async function addEntry(userID, data) {
+   
     let dataCollection = await mongoConnection.collection('final');
     let result = await dataCollection.updateOne(
         { _id: new ObjectId(userID) },

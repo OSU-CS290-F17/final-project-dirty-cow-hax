@@ -61,27 +61,13 @@ app.get('/people/:userID', async (req, res) => {
 
 });
 
-app.get('/people/:userID/:entryID', async (req, res) => {
+
+app.get(`/people/:userID/raw`, async (req, res) => {
 
     const userID = req.params.userID;
-    const entryID = req.params.entryID;
-    
-    const userInfo = await databaseConnection.getUser(userID);
-    const entryData = await databaseConnection.getSingleEntry(userID, entryID);
+    const entries = await databaseConnection.getEntries(userID, 25, 0);
 
-    if (!userInfo || !entryData) {
-
-        res.status(500).render('layouts/error', {
-            err: 'Internal Server Error', errNum: 500
-        });
-        return;
-
-    }
-
-    res.status(200).render('layouts/single-entry', {
-        userInfo,
-        entryData
-    })
+    res.status(200).contentType('application/json').send(entries);
 
 });
 
@@ -144,7 +130,7 @@ app.post("/people/:userID/new", async (req, res) => {
         return;
 
     }
-    await databaseConnection.addEntry(userID, {}, entryData);
+    await databaseConnection.addEntry(userID, entryData);
     res.status(200).send("complete");
 
 });
@@ -162,16 +148,6 @@ app.delete('/people/:userID', async (req, res) => {
 
     const userID = req.params.userID;
 
-    if (isNaN(userID)) {
-
-        res.status(400).render('layouts/error', {
-            err: "Bad Request",
-            errNum: 400
-        });
-        return;
-
-    }
-
     if(!await databaseConnection.deleteUser(userID)) {
         res.status(400).render('layouts/error', {
             err: "Bad Request",
@@ -185,23 +161,13 @@ app.delete('/people/:userID', async (req, res) => {
 });
 
 //Delete entry
-app.delete(`/people/:userID/:entryID`, async (req, res) => {
+app.delete(`/people/:userID/delete`, async (req, res) => {
 
 
     const userID = req.params.userID;
-    const entryID = req.params.entryID;
+    const postToDelete = req.body;
 
-    if (isNaN(userID) || isNaN(entryID)) {
-
-        res.status(400).render('layouts/error', {
-            err: "Bad Request",
-            errNum: 400
-        });
-        return;
-
-    }
-
-    if(!await databaseConnection.deleteEntry(userID, entryID)) {
+    if (!await databaseConnection.deleteEntry(userID, postToDelete)) {
         res.status(400).render('layouts/error', {
             err: "Deletion Failed",
             errNum: 400
@@ -213,6 +179,24 @@ app.delete(`/people/:userID/:entryID`, async (req, res) => {
     res.status(200).send('Entry Deleted');
 
 });
+
+app.put(`/people/:userID`, async (req, res) => {
+
+    const userID = req.params.userID;
+    const data = req.body;
+
+    if (!await databaseConnection.updateEntry(userID, data)) {
+        res.status(400).render('layouts/error', {
+            err: "Update Failed",
+            errNum: 400
+        });
+        return;
+    }
+
+    res.status(200).send('Entry Updated');
+    
+
+})
 
 //#endregion
 

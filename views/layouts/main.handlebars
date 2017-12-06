@@ -4,7 +4,11 @@
 
 <button class="action-button" id="entry-button">Add Entry</button>
 
+
+
 {{> user-info userInfo}}
+
+{{> chart}}
 
 <div class="entries">
     {{#each entries}}
@@ -19,6 +23,6 @@
         <button id="create-button" class="create-button">Create</button>
     </div>
 </div>
+<div id='entry-modal-backdrop' class="hidden modal-background"></div>
 
-<div class="hidden" id="modal-background"></div>
 
