@@ -14,6 +14,7 @@
     position: fixed;
     right: 10px;
     bottom: 20px;
+    z-index: 1;
 }
 
 .user-info-header {
@@ -82,4 +83,30 @@
     background-color: rgba(22, 19, 19, 0.623);
     width: 100%;
     height: 100%;
+}
+
+.entryContainer {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 50px;
+    z-index: 0;
+}
+
+.chart {
+    width: 100%;
+    margin-left: auto;
+    margin-right: 30%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
