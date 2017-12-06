@@ -8,9 +8,11 @@
 
 {{> user-info userInfo}}
 
-{{> chart}}
+<div class='chart'>
+    {{> chart}}
+</div>
 
-<div class="entries">
+<div class="entryContainer">
     {{#each entries}}
         {{> weight-entry this}}
     {{/each}}
